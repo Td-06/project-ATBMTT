@@ -19,7 +19,7 @@ const char bin_to_hex[16] = {
 };
 
 //Chuyentuhethaplucphansangnhiphan
-string chuyenhe16sangnhiphan(string s) {
+string chuyenHe16SangNhiPhan(string s) {
     string nhiphan = "";
     for (int i = 0; i < s.length(); i++) {
         char c = toupper(s[i]);
@@ -30,7 +30,7 @@ string chuyenhe16sangnhiphan(string s) {
 }
 
 //Chuyentunhiphansanghethaplucphan
-string chuyennhiphansanghe16(string s) {
+string chuyenNhiPhanSangHe16(string s) {
     string he16 = "";
     for (size_t i = 0; i < s.length(); i += 4) {
         string ch = s.substr(i, 4);
@@ -44,7 +44,7 @@ string chuyennhiphansanghe16(string s) {
 }
 
 //Chuyentunhiphansangthapphan
-int chuyennhiphansangthapphan(string nhiphan) {
+int chuyenNhiPhanSangThapPhan(string nhiphan) {
     int thapphan = 0;
     for (int i = nhiphan.length() - 1, j = 0; i >= 0; i--, j++) {
         if (nhiphan[i] == '1') {
@@ -55,7 +55,7 @@ int chuyennhiphansangthapphan(string nhiphan) {
 }
 
 //Chuyentuthapphansangnhiphan
-string chuyenthapphansangnhiphan(int num) {
+string chuyenThapPhanSangNhiPhan(int num) {
     string ketqua = "";
     if (num == 0) return "0000";
     while (num > 0) {
@@ -69,7 +69,7 @@ string chuyenthapphansangnhiphan(int num) {
 }
 
 //Hamhoanvicacbit
-string hoanvi(string k, const int arr[], int n) {
+string hoanVi(string k, const int arr[], int n) {
     string hoanviketqua = "";
     for (int i = 0; i < n; i++) {
         hoanviketqua += k[arr[i] - 1];
@@ -78,7 +78,7 @@ string hoanvi(string k, const int arr[], int n) {
 }
 
 //Dichtraicacbit
-string dichtrai(string k, int sldich) {
+string dichTrai(string k, int sldich) {
     string s = "";
     for (int i = 0; i < sldich; i++) {
         for (size_t j = 1; j < k.length(); j++) {
@@ -92,7 +92,7 @@ string dichtrai(string k, int sldich) {
 }
 
 //TinhXORcuahaichuoinhiphan
-string tinhxor(string a, string b) {
+string tinhXor(string a, string b) {
     string ketqua = "";
     for (size_t i = 0; i < a.length(); i++) {
         ketqua += (a[i] == b[i]) ? "0" : "1";
@@ -175,7 +175,7 @@ const int banghoanvicuoi[64] = {40, 8, 48, 16, 56, 24, 64, 32,
                                 33, 1, 41, 9, 49, 17, 57, 25};
 
 //Hamnhapdulieu
-void nhapdulieu(string& vanbangoc, string& khoa) {
+void nhapDuLieu(string& vanbangoc, string& khoa) {
     cout << "Nhap van ban goc(16 ky tu): ";
     cin >> vanbangoc;
     bool hople = false;
@@ -230,7 +230,7 @@ void nhapdulieu(string& vanbangoc, string& khoa) {
 }
 
 //Hamxuatketqua
-void xuatketqua(const string& vanbanmahoa, const string& vanbangoc) {
+void xuatKetQua(const string& vanbanmahoa, const string& vanbangoc) {
     cout << "\nKetquamahoa\n";
     cout << "Vanbanmahoa: " << vanbanmahoa << endl;
     cout << "\nKetquagiaima\n";
@@ -238,12 +238,12 @@ void xuatketqua(const string& vanbanmahoa, const string& vanbangoc) {
 }
 
 //HammahoaDES
-string mahoa(string vanbangoc, const string rkb[], const string rk[]) {
-    vanbangoc = chuyenhe16sangnhiphan(vanbangoc);
+string maHoa(string vanbangoc, const string rkb[], const string rk[]) {
+    vanbangoc = chuyenHe16SangNhiPhan(vanbangoc);
 
     //Hoanvibandau
-    vanbangoc = hoanvi(vanbangoc, banghoanvibandau, 64);
-    cout << "Sauhoanvibandau: " << chuyennhiphansanghe16(vanbangoc) << endl;
+    vanbangoc = hoanVi(vanbangoc, banghoanvibandau, 64);
+    cout << "Sauhoanvibandau: " << chuyenNhiPhanSangHe16(vanbangoc) << endl;
 
     //Chiadoi
     string phaitrai = vanbangoc.substr(0, 32);
@@ -251,25 +251,25 @@ string mahoa(string vanbangoc, const string rkb[], const string rk[]) {
 
     for (int i = 0; i < 16; i++) {
         //MorongDbox
-        string phaiphaimorong = hoanvi(phaiphai, bangmorongdbox, 48);
+        string phaiphaimorong = hoanVi(phaiphai, bangmorongdbox, 48);
 
         //XORvoikhoavong
-        string xor_x = tinhxor(phaiphaimorong, rkb[i]);
+        string xor_x = tinhXor(phaiphaimorong, rkb[i]);
 
         //ThaythebangSbox
         string sbox_str = "";
         for (int j = 0; j < 8; j++) {
-            int row = chuyennhiphansangthapphan(xor_x[j * 6] + string(1, xor_x[j * 6 + 5]));
-            int col = chuyennhiphansangthapphan(xor_x.substr(j * 6 + 1, 4));
+            int row = chuyenNhiPhanSangThapPhan(xor_x[j * 6] + string(1, xor_x[j * 6 + 5]));
+            int col = chuyenNhiPhanSangThapPhan(xor_x.substr(j * 6 + 1, 4));
             int val = bangsbox[j][row][col];
-            sbox_str += chuyenthapphansangnhiphan(val);
+            sbox_str += chuyenThapPhanSangNhiPhan(val);
         }
 
         //Hoanvithang
-        sbox_str = hoanvi(sbox_str, banghoanvithang, 32);
+        sbox_str = hoanVi(sbox_str, banghoanvithang, 32);
 
         //XORvoinua trai
-        string ketqua = tinhxor(phaitrai, sbox_str);
+        string ketqua = tinhXor(phaitrai, sbox_str);
         phaitrai = ketqua;
 
         //Hoandoi
@@ -278,14 +278,14 @@ string mahoa(string vanbangoc, const string rkb[], const string rk[]) {
             phaitrai = phaiphai;
             phaiphai = temp;
         }
-        cout << "Vong " << i + 1 << " " << chuyennhiphansanghe16(phaitrai) << " " << chuyennhiphansanghe16(phaiphai) << " " << rk[i] << endl;
+        cout << "Vong " << i + 1 << " " << chuyenNhiPhanSangHe16(phaitrai) << " " << chuyenNhiPhanSangHe16(phaiphai) << " " << rk[i] << endl;
     }
 
     //Kethop
     string kethop = phaitrai + phaiphai;
 
     //Hoanvicuoi
-    string vanbanmahoa = hoanvi(kethop, banghoanvicuoi, 64);
+    string vanbanmahoa = hoanVi(kethop, banghoanvicuoi, 64);
     return vanbanmahoa;
 }
 
@@ -293,10 +293,10 @@ int main() {
     string vanbangoc, khoa;
     
     //Nhapvanbangocvakhoa
-    nhapdulieu(vanbangoc, khoa);
+    nhapDuLieu(vanbangoc, khoa);
 
     //Taokhoa
-    khoa = chuyenhe16sangnhiphan(khoa);
+    khoa = chuyenHe16SangNhiPhan(khoa);
 
     //Bangbobitchanle
     const int bangbobitchanle[56] = {57, 49, 41, 33, 25, 17, 9,
@@ -309,7 +309,7 @@ int main() {
                                      21, 13, 5, 28, 20, 12, 4};
 
     //Laykhoa56bit
-    khoa = hoanvi(khoa, bangbobitchanle, 56);
+    khoa = hoanVi(khoa, bangbobitchanle, 56);
 
     //Bangsolandi bit
     const int bangsldichbit[16] = {1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1};
@@ -331,22 +331,22 @@ int main() {
     string rkb[16], rk[16];
     for (int i = 0; i < 16; i++) {
         //Dichbit
-        phaitrai = dichtrai(phaitrai, bangsldichbit[i]);
-        phaiphai = dichtrai(phaiphai, bangsldichbit[i]);
+        phaitrai = dichTrai(phaitrai, bangsldichbit[i]);
+        phaiphai = dichTrai(phaiphai, bangsldichbit[i]);
 
         //Kethop
         string kethopchuoi = phaitrai + phaiphai;
 
         //Nenkhoa
-        string khoavong = hoanvi(kethopchuoi, bangnenkhoa, 48);
+        string khoavong = hoanVi(kethopchuoi, bangnenkhoa, 48);
 
         rkb[i] = khoavong;
-        rk[i] = chuyennhiphansanghe16(khoavong);
+        rk[i] = chuyenNhiPhanSangHe16(khoavong);
     }
 
     //Mahoa
     cout << "\nMahoa\n";
-    string vanbanmahoa = chuyennhiphansanghe16(mahoa(vanbangoc, rkb, rk));
+    string vanbanmahoa = chuyenNhiPhanSangHe16(maHoa(vanbangoc, rkb, rk));
 
     //Giaima
     cout << "\nGiaima\n";
@@ -355,10 +355,10 @@ int main() {
         rkb_dao[i] = rkb[15 - i];
         rk_dao[i] = rk[15 - i];
     }
-    string vanban = chuyennhiphansanghe16(mahoa(vanbanmahoa, rkb_dao, rk_dao));
+    string vanban = chuyenNhiPhanSangHe16(maHoa(vanbanmahoa, rkb_dao, rk_dao));
 
     //Xuatketqua
-    xuatketqua(vanbanmahoa, vanban);
+    xuatKetQua(vanbanmahoa, vanban);
 
     return 0;
 }
